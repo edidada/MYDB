@@ -20,6 +20,7 @@ import top.guoziyang.mydb.backend.utils.Panic;
 import top.guoziyang.mydb.backend.utils.Parser;
 
 public class Recover {
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Recover.class.getName());
 
     private static final byte LOG_TYPE_INSERT = 0;
     private static final byte LOG_TYPE_UPDATE = 1;
@@ -43,7 +44,7 @@ public class Recover {
     }
 
     public static void recover(TransactionManager tm, Logger lg, PageCache pc) {
-        System.out.println("Recovering...");
+        logger.info("Recovering...");
 
         lg.rewind();
         int maxPgno = 0;
@@ -66,15 +67,15 @@ public class Recover {
             maxPgno = 1;
         }
         pc.truncateByBgno(maxPgno);
-        System.out.println("Truncate to " + maxPgno + " pages.");
+        logger.info("Truncate to " + maxPgno + " pages.");
 
         redoTranscations(tm, lg, pc);
-        System.out.println("Redo Transactions Over.");
+        logger.info("Redo Transactions Over.");
 
         undoTranscations(tm, lg, pc);
-        System.out.println("Undo Transactions Over.");
+        logger.info("Undo Transactions Over.");
 
-        System.out.println("Recovery Over.");
+        logger.info("Recovery Over.");
     }
 
     private static void redoTranscations(TransactionManager tm, Logger lg, PageCache pc) {

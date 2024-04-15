@@ -1,8 +1,11 @@
 package top.guoziyang.mydb.client;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Shell {
+    private static final Logger logger = Logger.getLogger(Shell.class.getName());
+
     private Client client;
 
     public Shell(Client client) {
@@ -20,9 +23,9 @@ public class Shell {
                 }
                 try {
                     byte[] res = client.execute(statStr.getBytes());
-                    System.out.println(new String(res));
+                    logger.info(new String(res));
                 } catch(Exception e) {
-                    System.out.println(e.getMessage());
+                    logger.info(e.getMessage());
                 }
 
             }

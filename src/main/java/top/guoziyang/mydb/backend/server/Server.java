@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import top.guoziyang.mydb.backend.tbm.TableManager;
 import top.guoziyang.mydb.transport.Encoder;
@@ -15,6 +16,8 @@ import top.guoziyang.mydb.transport.Packager;
 import top.guoziyang.mydb.transport.Transporter;
 
 public class Server {
+    private static final Logger logger = Logger.getLogger(Server.class.getName());
+
     private int port;
     TableManager tbm;
 
@@ -31,7 +34,7 @@ public class Server {
             e.printStackTrace();
             return;
         }
-        System.out.println("Server listen to port: " + port);
+        logger.info("Server listen to port: " + port);
         ThreadPoolExecutor tpe = new ThreadPoolExecutor(10, 20, 1L, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
         try {
             while(true) {
@@ -50,6 +53,8 @@ public class Server {
 }
 
 class HandleSocket implements Runnable {
+    private static final Logger logger = Logger.getLogger(HandleSocket.class.getName());
+
     private Socket socket;
     private TableManager tbm;
 
@@ -61,7 +66,7 @@ class HandleSocket implements Runnable {
     @Override
     public void run() {
         InetSocketAddress address = (InetSocketAddress)socket.getRemoteSocketAddress();
-        System.out.println("Establish connection: " + address.getAddress().getHostAddress()+":"+address.getPort());
+        logger.info("Establish connection: " + address.getAddress().getHostAddress()+":"+address.getPort());
         Packager packager = null;
         try {
             Transporter t = new Transporter(socket);

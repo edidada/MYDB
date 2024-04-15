@@ -1,5 +1,7 @@
 # MYDB
 
+## java11
+
 MYDB 是一个 Java 实现的简单的数据库，部分原理参照自 MySQL、PostgreSQL 和 SQLite。实现了以下功能：
 
 - 数据的可靠性和数据恢复
@@ -23,6 +25,7 @@ mvn compile
 
 接着执行以下命令以 /tmp/mydb 作为路径创建数据库：
 
+备注：windows D:/tmp/mydb
 ```shell
 mvn exec:java -Dexec.mainClass="top.guoziyang.mydb.backend.Launcher" -Dexec.args="-create /tmp/mydb"
 ```
@@ -44,3 +47,8 @@ mvn exec:java -Dexec.mainClass="top.guoziyang.mydb.client.Launcher"
 一个执行示例：
 
 ![](https://s3.bmp.ovh/imgs/2021/11/2749906870276904.png)
+
+```sql
+create table test_table id int32, value int32 (index id)
+insert into test_table values 10 33
+```

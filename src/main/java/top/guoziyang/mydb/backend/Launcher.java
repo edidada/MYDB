@@ -15,7 +15,10 @@ import top.guoziyang.mydb.backend.vm.VersionManager;
 import top.guoziyang.mydb.backend.vm.VersionManagerImpl;
 import top.guoziyang.mydb.common.Error;
 
+import java.util.logging.Logger;
+
 public class Launcher {
+    private static final Logger logger = Logger.getLogger(Launcher.class.getName());
 
     public static final int port = 9999;
 
@@ -40,7 +43,7 @@ public class Launcher {
             createDB(cmd.getOptionValue("create"));
             return;
         }
-        System.out.println("Usage: launcher (open|create) DBPath");
+        logger.info("Usage: launcher (open|create) DBPath");
     }
 
     private static void createDB(String path) {

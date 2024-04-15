@@ -14,7 +14,11 @@ import top.guoziyang.mydb.backend.tbm.BeginRes;
 import top.guoziyang.mydb.backend.tbm.TableManager;
 import top.guoziyang.mydb.common.Error;
 
+import java.util.logging.Logger;
+
 public class Executor {
+    private static final Logger logger = Logger.getLogger(Executor.class.getName());
+
     private long xid;
     TableManager tbm;
 
@@ -25,13 +29,13 @@ public class Executor {
 
     public void close() {
         if(xid != 0) {
-            System.out.println("Abnormal Abort: " + xid);
+            logger.info("Abnormal Abort: " + xid);
             tbm.abort(xid);
         }
     }
 
     public byte[] execute(byte[] sql) throws Exception {
-        System.out.println("Execute: " + new String(sql));
+        logger.info("Execute: " + new String(sql));
         Object stat = Parser.Parse(sql);
         if(Begin.class.isInstance(stat)) {
             if(xid != 0) {

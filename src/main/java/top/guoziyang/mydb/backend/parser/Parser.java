@@ -430,7 +430,7 @@ public class Parser {
             tokenizer.pop();
             String tmp2 = tokenizer.peek();
             if("read".equals(tmp2)) {
-                begin.isRepeatableRead = true;
+                begin.setRepeatableRead(true);
                 tokenizer.pop();
                 if(!"".equals(tokenizer.peek())) {
                     throw Error.InvalidCommandException;

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
+import java.util.logging.Logger;
 
 import top.guoziyang.mydb.backend.common.AbstractCache;
 import top.guoziyang.mydb.backend.dm.DataManager;
@@ -13,6 +15,7 @@ import top.guoziyang.mydb.backend.utils.Panic;
 import top.guoziyang.mydb.common.Error;
 
 public class VersionManagerImpl extends AbstractCache<Entry> implements VersionManager {
+    private static final Logger logger = Logger.getLogger(VersionManagerImpl.class.getName());
 
     TransactionManager tm;
     DataManager dm;
@@ -155,8 +158,8 @@ public class VersionManagerImpl extends AbstractCache<Entry> implements VersionM
                 throw t.err;
             }
         } catch(NullPointerException n) {
-            System.out.println(xid);
-            System.out.println(activeTransaction.keySet());
+            logger.info(String.valueOf(xid));
+            logger.info((Supplier<String>) activeTransaction.keySet());
             Panic.panic(n);
         }
 

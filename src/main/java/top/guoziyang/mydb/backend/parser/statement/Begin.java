@@ -1,5 +1,13 @@
 package top.guoziyang.mydb.backend.parser.statement;
 
 public class Begin {
-    public boolean isRepeatableRead;
+    private boolean isRepeatableRead;
+
+    public boolean isRepeatableRead() {
+        return isRepeatableRead;
+    }
+
+    public void setRepeatableRead(boolean repeatableRead) {
+        isRepeatableRead = repeatableRead;
+    }
 }
